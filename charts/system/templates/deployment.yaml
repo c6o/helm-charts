@@ -1,3 +1,8 @@
+{{- if ne .Release.Namespace "c6o-system" }}
+{{- fail "The codezero system has to be installed in c6o-system" }}
+{{- end }}
+
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
