@@ -38,7 +38,7 @@ spec:
               - name: TEAMSPACES_HUB_API
                 value: {{ .Values.hubAPI }}
             {{- if .Values.token }}
-              - name: TEAMSPACES_HUB_TOKEN
+              - name: TEAMSPACES_HUB_SPACE_TOKEN
                 value: {{ .Values.token }}
             {{- end }}
           ports:
