@@ -4,6 +4,8 @@
 
 replicaCount: 1
 sha: ""
+hubAPI: https://api.codezero.io
+token: ""
 image:
   pullPolicy: IfNotPresent
 

@@ -34,6 +34,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: c6oio/czsystem:{{ .Values.sha | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: 
+              - name: TEAMSPACES_HUB_API
+                value: {{ .Values.hubAPI }}
+            {{- if .Values.token }}
+              - name: TEAMSPACES_HUB_TOKEN
+                value: {{ .Values.token }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
