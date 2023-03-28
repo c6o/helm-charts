@@ -7,7 +7,7 @@ sha: ""
 hubAPI: https://api.codezero.io
 token: ""
 image:
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 
 serviceAccount:
   # Specifies whether a service account should be created
