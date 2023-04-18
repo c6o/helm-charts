@@ -5,7 +5,9 @@
 replicaCount: 1
 sha: ""
 hubAPI: https://api.codezero.io
-token: ""
+space:
+  id: ""
+  token: ""
 image:
   pullPolicy: Always
 

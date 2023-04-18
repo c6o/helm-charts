@@ -34,6 +34,13 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: c6oio/czsystem:{{ .Values.sha | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CZ_SPACE_CA_CERT
+              value: /etc/ssl/certs/space/ca.pem
+            - name: CZ_SPACE_CERT
+              value: /etc/ssl/certs/space/tls.pem
+            - name: CZ_SPACE_CERT_KEY
+              value: /etc/ssl/certs/space/tls.key
           envFrom:
             - secretRef:
                 name: {{ include "system.fullname" . }}
@@ -43,6 +50,15 @@ spec:
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/ssl/certs/space
+              name: space-cert
+              readOnly: true
+      volumes:
+        - name: space-cert
+          secret:
+            secretName: space-cert
+            optional: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
