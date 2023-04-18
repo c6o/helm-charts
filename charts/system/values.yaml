@@ -5,7 +5,7 @@
 replicaCount: 1
 sha: ""
 hub:
-  api: https://api.codezero.io
+  url: https://api.codezero.io
 space:
   token: ""
 image:
