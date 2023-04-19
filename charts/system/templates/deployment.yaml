@@ -1,5 +1,5 @@
-{{- if ne .Release.Namespace "c6o-system" }}
-{{- fail "The codezero system has to be installed in c6o-system" }}
+{{- if ne .Release.Namespace "codezero" }}
+{{- fail "The codezero system has to be installed in codezero namespace" }}
 {{- end }}
 
 
