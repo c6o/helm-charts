@@ -1,0 +1,69 @@
+{{- if ne .Release.Namespace "codezero" }}
+{{- fail "The codezero orchestrator has to be installed in codezero namespace" }}
+{{- end }}
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "orchestrator.fullname" . }}
+  labels:
+    {{- include "orchestrator.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.orchestrator.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "orchestrator.selectorLabels" . | nindent 6 }}
+      {{- include "codezero.externalLBSelectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.orchestrator.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "orchestrator.selectorLabels" . | nindent 8 }}
+        {{- include "codezero.externalLBSelectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "orchestrator.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.orchestrator.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "orchestrator.name" . }}
+          securityContext:
+            {{- toYaml .Values.orchestrator.securityContext | nindent 12 }}
+          image: "c6oio/orchestrator:{{ .Values.orchestrator.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.orchestrator.image.pullPolicy }}
+          env:
+            - name: CZ_SPACE_CA_CERT
+              value: /etc/ssl/certs/space/ca.pem
+            - name: CZ_SPACE_CERT
+              value: /etc/ssl/certs/space/tls.pem
+            - name: CZ_SPACE_CERT_KEY
+              value: /etc/ssl/certs/space/tls.key
+            - name: PORT
+              value: '8900'
+          ports:
+            - containerPort: 8900
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.orchestrator.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /etc/ssl/certs/space
+              name: space-cert
+              readOnly: true
+      volumes:
+        - name: space-cert
+          secret:
+            secretName: space-cert
+      {{- with .Values.orchestrator.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.orchestrator.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.orchestrator.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

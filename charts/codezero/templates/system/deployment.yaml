@@ -2,7 +2,6 @@
 {{- fail "The codezero system has to be installed in codezero namespace" }}
 {{- end }}
 
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -10,30 +9,30 @@ metadata:
   labels:
     {{- include "system.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
-  replicas: {{ .Values.replicaCount }}
-  {{- end }}
+  replicas: {{ .Values.system.replicaCount }}
   selector:
     matchLabels:
       {{- include "system.selectorLabels" . | nindent 6 }}
+      {{- include "codezero.externalLBSelectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.podAnnotations }}
+      {{- with .Values.system.podAnnotations }}
       annotations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
         {{- include "system.selectorLabels" . | nindent 8 }}
+        {{- include "codezero.externalLBSelectorLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "system.serviceAccountName" . }}
       securityContext:
-        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+        {{- toYaml .Values.system.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "system.name" . }}
           securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: c6oio/czsystem:{{ .Values.sha | default .Chart.AppVersion }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+            {{- toYaml .Values.system.securityContext | nindent 12 }}
+          image: "c6oio/czsystem:{{ .Values.system.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.system.image.pullPolicy }}
           env:
             - name: CZ_SPACE_CA_CERT
               value: /etc/ssl/certs/space/ca.pem
@@ -41,15 +40,16 @@ spec:
               value: /etc/ssl/certs/space/tls.pem
             - name: CZ_SPACE_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
+            - name: CZ_ORCHESTRATOR_HOST
+              value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8900"
           envFrom:
             - secretRef:
                 name: {{ include "system.fullname" . }}
           ports:
-            - name: http
-              containerPort: {{ .Values.service.port }}
+            - containerPort: 443
               protocol: TCP
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.system.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/ssl/certs/space
               name: space-cert
@@ -59,15 +59,15 @@ spec:
           secret:
             secretName: space-cert
             optional: true
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.system.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.system.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.system.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}

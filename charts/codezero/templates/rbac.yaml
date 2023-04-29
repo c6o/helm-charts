@@ -4,9 +4,12 @@ metadata:
   name: {{ .Release.Namespace }}-crb
 subjects:
 - kind: ServiceAccount
-  name: {{ include "system.serviceAccountName" . }} # name of your service account
+  name: {{ include "orchestrator.serviceAccountName" . }}
   namespace: {{ .Release.Namespace }}
-roleRef: # referring to your ClusterRole
+- kind: ServiceAccount
+  name: {{ include "system.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }}
+roleRef:
   kind: ClusterRole
   name: cluster-admin
   apiGroup: rbac.authorization.k8s.io

@@ -1,0 +1,74 @@
+# Default values for Code Zero.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+codezero:
+  name: codezero
+  hub:
+    url: https://api.codezero.io
+  space:
+    token: ""
+
+  podAnnotations: { }
+  labels: { }
+  podLabels: { }
+
+  service:
+    type: LoadBalancer
+
+system:
+  name: system
+  image:
+    tag: pasley
+    pullPolicy: Always
+  replicaCount: 1
+
+  podAnnotations: { }
+  labels: { }
+  podLabels: { }
+
+  podSecurityContext: { }
+  securityContext: { }
+
+  resources: { }
+  nodeSelector: { }
+  tolerations: [ ]
+  affinity: { }
+
+  serviceAccount: # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: { }
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
+
+orchestrator:
+  name: orchestrator
+  image:
+    tag: pasley
+    pullPolicy: Always
+  replicaCount: 1
+
+  podAnnotations: { }
+  labels: { }
+  podLabels: { }
+
+  podSecurityContext: { }
+  securityContext: { }
+
+  resources: { }
+  nodeSelector: { }
+  tolerations: [ ]
+  affinity: { }
+
+  serviceAccount: # Specifies whether a service account should be created
+    create: true
+    # Annotations to add to the service account
+    annotations: { }
+    # The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: ""
