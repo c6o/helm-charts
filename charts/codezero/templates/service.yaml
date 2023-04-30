@@ -7,8 +7,8 @@ metadata:
 spec:
   type: {{ .Values.codezero.service.type }}
   ports:
-    - port: 443
-      targetPort: 443
+    - port: 8800
+      targetPort: 8800
       protocol: TCP
       name: system
     - port: 8900

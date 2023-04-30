@@ -42,11 +42,13 @@ spec:
               value: /etc/ssl/certs/space/tls.key
             - name: CZ_ORCHESTRATOR_AUTHORITY
               value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8900"
+            - name: CZ_PORT
+              value: "8800"
           envFrom:
             - secretRef:
                 name: {{ include "system.fullname" . }}
           ports:
-            - containerPort: 443
+            - containerPort: 8800
               protocol: TCP
           resources:
             {{- toYaml .Values.system.resources | nindent 12 }}
