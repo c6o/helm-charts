@@ -42,6 +42,10 @@ spec:
               value: /etc/ssl/certs/space/tls.key
             - name: CZ_PORT
               value: '8900'
+            - name: NODE_ENV
+              value: 'development'
+            - name: DEBUG
+              value: '*,-engine*,-nodemon*,-*expo*,-babel*,-winston*,-follow-redirects*'
           ports:
             - containerPort: 8900
               protocol: TCP
