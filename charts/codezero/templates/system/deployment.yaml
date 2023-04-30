@@ -40,7 +40,7 @@ spec:
               value: /etc/ssl/certs/space/tls.pem
             - name: CZ_SPACE_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
-            - name: CZ_ORCHESTRATOR_HOST
+            - name: CZ_ORCHESTRATOR_AUTHORITY
               value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8900"
           envFrom:
             - secretRef:

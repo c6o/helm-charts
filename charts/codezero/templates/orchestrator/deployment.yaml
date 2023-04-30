@@ -40,7 +40,7 @@ spec:
               value: /etc/ssl/certs/space/tls.pem
             - name: CZ_SPACE_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
-            - name: PORT
+            - name: CZ_PORT
               value: '8900'
           ports:
             - containerPort: 8900
