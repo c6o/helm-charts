@@ -5,11 +5,11 @@ metadata:
   labels:
     {{- include "system.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 8800
+      targetPort: 8800
       protocol: TCP
-      name: http
+      name: system
   selector:
     {{- include "system.selectorLabels" . | nindent 4 }}
