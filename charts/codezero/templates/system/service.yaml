@@ -10,6 +10,6 @@ spec:
     - port: 8800
       targetPort: 8800
       protocol: TCP
-      name: system
+      name: http
   selector:
     {{- include "system.selectorLabels" . | nindent 4 }}
