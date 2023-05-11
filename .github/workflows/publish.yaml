@@ -1,0 +1,31 @@
+name: publish
+on:
+  push:
+    branches:
+      - pasley
+  workflow_dispatch:
+jobs:
+  publish:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+    steps:
+      # Checkout the codebase
+      - name: Checkout
+        uses: actions/checkout@v3
+      - id: auth
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          workload_identity_provider: 'projects/2314364601/locations/global/workloadIdentityPools/c6o-github-action-pool/providers/c6o-github-provider'
+          service_account: 'github-action-key@c6o-production.iam.gserviceaccount.com'
+      - name: Setup GCloud
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: c6o-production
+      - name: Deploy
+        run: |
+          helm package ./charts/* -d ./tmp/
+          helm repo index tmp --url https://charts.codezero.io
+          gsutil cp ./tmp/* gs://c6o-releases/helm-charts
