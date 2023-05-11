@@ -42,6 +42,8 @@ spec:
               value: /etc/ssl/certs/space/tls.key
             - name: CZ_PORT
               value: '8900'
+            - name: CZ_HTTPS_PORT
+              value: '8901'
             - name: NODE_ENV
               value: 'development'
             - name: DEBUG

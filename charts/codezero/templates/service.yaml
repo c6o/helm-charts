@@ -10,10 +10,10 @@ spec:
     - port: 8800
       targetPort: 8800
       protocol: TCP
-      name: system
-    - port: 8900
-      targetPort: 8900
+      name: system-http
+    - port: 8901
+      targetPort: 8901
       protocol: TCP
-      name: orchestrator
+      name: orchestrator-https
   selector:
     {{- include "codezero.externalLBSelectorLabels" . | nindent 4 }}
