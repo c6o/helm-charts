@@ -34,6 +34,12 @@ spec:
           image: "c6oio/orchestrator:{{ .Values.orchestrator.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.orchestrator.image.pullPolicy }}
           env:
+            - name: CZ_SPACE_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "codezero.fullname" . }}
+                  key: spaceID
+                  optional: true
             - name: CZ_SPACE_CA_CERT
               value: /etc/ssl/certs/space/ca.pem
             - name: CZ_SPACE_CERT

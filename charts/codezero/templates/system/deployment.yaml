@@ -40,6 +40,12 @@ spec:
               value: /etc/ssl/certs/space/tls.pem
             - name: CZ_SPACE_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
+            - name: CZ_SPACE_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "codezero.fullname" . }}
+                  key: spaceID
+                  optional: true
             - name: CZ_ORCHESTRATOR_AUTHORITY
               value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8900"
             - name: CZ_PORT
