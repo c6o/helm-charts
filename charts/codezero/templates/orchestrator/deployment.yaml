@@ -42,9 +42,9 @@ spec:
                   optional: true
             - name: CZ_SPACE_CA_CERT
               value: /etc/ssl/certs/space/ca.pem
-            - name: CZ_SPACE_CERT
+            - name: CZ_CLUSTER_CERT
               value: /etc/ssl/certs/space/tls.pem
-            - name: CZ_SPACE_CERT_KEY
+            - name: CZ_CLUSTER_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
             - name: CZ_PORT
               value: '8900'
