@@ -60,12 +60,12 @@ spec:
             {{- toYaml .Values.system.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/ssl/certs/space
-              name: space-cert
+              name: codezero-cert
               readOnly: true
       volumes:
-        - name: space-cert
+        - name: codezero-cert
           secret:
-            secretName: space-cert
+            secretName: codezero-cert
             optional: true
       {{- with .Values.system.nodeSelector }}
       nodeSelector:

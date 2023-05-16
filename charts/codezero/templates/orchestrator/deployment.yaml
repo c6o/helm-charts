@@ -61,12 +61,12 @@ spec:
             {{- toYaml .Values.orchestrator.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/ssl/certs/space
-              name: space-cert
+              name: codezero-cert
               readOnly: true
       volumes:
-        - name: space-cert
+        - name: codezero-cert
           secret:
-            secretName: space-cert
+            secretName: codezero-cert
       {{- with .Values.orchestrator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
