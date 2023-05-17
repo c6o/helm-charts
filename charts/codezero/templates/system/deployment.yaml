@@ -36,10 +36,16 @@ spec:
           env:
             - name: CZ_SPACE_CA_CERT
               value: /etc/ssl/certs/space/ca.pem
-            - name: CZ_SPACE_CERT
+            - name: CZ_CLUSTER_CERT
               value: /etc/ssl/certs/space/tls.pem
-            - name: CZ_SPACE_CERT_KEY
+            - name: CZ_CLUSTER_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
+            - name: CZ_SPACE_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "codezero.fullname" . }}
+                  key: spaceID
+                  optional: true
             - name: CZ_ORCHESTRATOR_AUTHORITY
               value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8900"
             - name: CZ_PORT
@@ -54,12 +60,12 @@ spec:
             {{- toYaml .Values.system.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/ssl/certs/space
-              name: space-cert
+              name: codezero-cert
               readOnly: true
       volumes:
-        - name: space-cert
+        - name: codezero-cert
           secret:
-            secretName: space-cert
+            secretName: codezero-cert
             optional: true
       {{- with .Values.system.nodeSelector }}
       nodeSelector:

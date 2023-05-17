@@ -34,11 +34,17 @@ spec:
           image: "c6oio/orchestrator:{{ .Values.orchestrator.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.orchestrator.image.pullPolicy }}
           env:
+            - name: CZ_SPACE_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "codezero.fullname" . }}
+                  key: spaceID
+                  optional: true
             - name: CZ_SPACE_CA_CERT
               value: /etc/ssl/certs/space/ca.pem
-            - name: CZ_SPACE_CERT
+            - name: CZ_CLUSTER_CERT
               value: /etc/ssl/certs/space/tls.pem
-            - name: CZ_SPACE_CERT_KEY
+            - name: CZ_CLUSTER_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
             - name: CZ_PORT
               value: '8900'
@@ -55,12 +61,12 @@ spec:
             {{- toYaml .Values.orchestrator.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/ssl/certs/space
-              name: space-cert
+              name: codezero-cert
               readOnly: true
       volumes:
-        - name: space-cert
+        - name: codezero-cert
           secret:
-            secretName: space-cert
+            secretName: codezero-cert
       {{- with .Values.orchestrator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
