@@ -31,7 +31,7 @@ spec:
         - name: {{ include "system.name" . }}
           securityContext:
             {{- toYaml .Values.system.securityContext | nindent 12 }}
-          image: "c6oio/czsystem:{{ .Values.system.image.tag | default .Chart.AppVersion }}"
+          image: "c6oio/system:{{ .Values.system.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.system.image.pullPolicy }}
           env:
             - name: CZ_SPACE_CA_CERT
