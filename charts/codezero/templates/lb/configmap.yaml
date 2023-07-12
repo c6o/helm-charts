@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "lb.fullname" . }}
+  labels:
+    {{- include "lb.labels" . | nindent 4 }}
+data:
+  haproxy.cfg: |
+    global
+      log stdout format raw local0
+      maxconn 4096
+
+    defaults
+      log global
+      timeout client 60s
+      timeout connect 60s
+      timeout server 60s
+
+    frontend system
+      bind :8800 ssl crt /etc/ssl/certs/space/server.pem
+      default_backend system
+
+    backend system
+      server system codezero-system:8800 check
+
+    frontend orchestrator
+      bind :8900 ssl crt /etc/ssl/certs/space/server.pem
+      default_backend orchestrator
+
+    backend orchestrator
+      server orchestrator codezero-orchestrator:8900 check

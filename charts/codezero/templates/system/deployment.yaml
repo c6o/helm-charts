@@ -1,7 +1,3 @@
-{{- if ne .Release.Namespace "codezero" }}
-{{- fail "The codezero system has to be installed in codezero namespace" }}
-{{- end }}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,16 +9,12 @@ spec:
   selector:
     matchLabels:
       {{- include "system.selectorLabels" . | nindent 6 }}
-      {{- include "codezero.externalLBSelectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.system.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- include "system.podAnnotations" . | nindent 8 }}
       labels:
-        {{- include "system.selectorLabels" . | nindent 8 }}
-        {{- include "codezero.externalLBSelectorLabels" . | nindent 8 }}
+        {{- include "system.podLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "system.serviceAccountName" . }}
       securityContext:
@@ -47,7 +39,7 @@ spec:
                   key: spaceID
                   optional: true
             - name: CZ_ORCHESTRATOR_AUTHORITY
-              value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:8900"
+              value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}:8900"
             - name: CZ_PORT
               value: "8800"
           envFrom:

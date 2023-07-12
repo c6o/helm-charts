@@ -49,23 +49,17 @@ helm.sh/chart: {{ include "codezero.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: codezero
 {{- with .Values.codezero.labels }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
 
 {{/*
-External Load Balancer service selector labels
-*/}}
-{{- define "codezero.externalLBSelectorLabels" -}}
-codezero.io/externallb: "true"
-{{- end }}
-
-{{/*
 Pod labels
 */}}
 {{- define "codezero.podLabels" -}}
-{{- include "codezero.selectorLabels" . }}
+{{ include "codezero.labels" . }}
 {{- with .Values.codezero.podLabels }}
 {{ . | toYaml }}
 {{- end }}

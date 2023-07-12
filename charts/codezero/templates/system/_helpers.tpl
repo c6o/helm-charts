@@ -1,3 +1,7 @@
+{{- if ne .Release.Namespace "codezero" }}
+{{- fail "The CodeZero system has to be installed in codezero namespace" }}
+{{- end }}
+
 {{/*
 Expand the name of the chart.
 */}}
@@ -56,8 +60,8 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Pod labels
 */}}
 {{- define "system.podLabels" -}}
-{{- include "codezero.podLabels" . }}
-{{- include "system.selectorLabels" . }}
+{{ include "codezero.podLabels" . }}
+{{ include "system.selectorLabels" . }}
 {{- with .Values.system.podLabels }}
 {{ . | toYaml }}
 {{- end }}
@@ -67,8 +71,7 @@ Pod labels
 Pod annotations
 */}}
 {{- define "system.podAnnotations" -}}
-{{- include "codezero.podAnnotations" . }}
-checksum/configmap: {{ include (print .Template.BasePath "/system/configmap.yaml") . | sha1sum }}
+{{ include "codezero.podAnnotations" . }}
 {{- with .Values.system.podAnnotations }}
 {{ . | toYaml }}
 {{- end }}

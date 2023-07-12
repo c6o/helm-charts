@@ -1,4 +1,4 @@
-# Default values for Code Zero.
+# Default values for CodeZero.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -15,9 +15,6 @@ codezero:
   podAnnotations: { }
   labels: { }
   podLabels: { }
-
-  service:
-    type: LoadBalancer
 
 system:
   name: system
@@ -38,12 +35,9 @@ system:
   tolerations: [ ]
   affinity: { }
 
-  serviceAccount: # Specifies whether a service account should be created
+  serviceAccount:
     create: true
-    # Annotations to add to the service account
     annotations: { }
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
     name: ""
 
 orchestrator:
@@ -65,10 +59,45 @@ orchestrator:
   tolerations: [ ]
   affinity: { }
 
-  serviceAccount: # Specifies whether a service account should be created
+  serviceAccount:
     create: true
-    # Annotations to add to the service account
     annotations: { }
-    # The name of the service account to use.
-    # If not set and create is true, a name is generated using the fullname template
     name: ""
+
+lb:
+  name: lb
+  image:
+    tag: "2.8.1"
+    pullPolicy: Always
+  replicaCount: 1
+
+  podAnnotations: { }
+  labels: { }
+  podLabels: { }
+
+  podSecurityContext: { }
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: true
+    capabilities:
+      drop:
+        - ALL
+      add:
+        - NET_BIND_SERVICE
+    seccompProfile:
+      type: RuntimeDefault
+
+  resources: { }
+  nodeSelector: { }
+  tolerations: [ ]
+  affinity: { }
+
+  serviceAccount:
+    create: true
+    annotations: { }
+    name: ""
+
+  service:
+    type: LoadBalancer

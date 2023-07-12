@@ -1,7 +1,3 @@
-{{- if ne .Release.Namespace "codezero" }}
-{{- fail "The codezero orchestrator has to be installed in codezero namespace" }}
-{{- end }}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,16 +9,12 @@ spec:
   selector:
     matchLabels:
       {{- include "orchestrator.selectorLabels" . | nindent 6 }}
-      {{- include "codezero.externalLBSelectorLabels" . | nindent 6 }}
   template:
     metadata:
-      {{- with .Values.orchestrator.podAnnotations }}
       annotations:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        {{- include "orchestrator.podAnnotations" . | nindent 8 }}
       labels:
-        {{- include "orchestrator.selectorLabels" . | nindent 8 }}
-        {{- include "codezero.externalLBSelectorLabels" . | nindent 8 }}
+        {{- include "orchestrator.podLabels" . | nindent 8 }}
     spec:
       serviceAccountName: {{ include "orchestrator.serviceAccountName" . }}
       securityContext:
@@ -48,8 +40,6 @@ spec:
               value: /etc/ssl/certs/space/tls.key
             - name: CZ_PORT
               value: '8900'
-            - name: CZ_HTTPS_PORT
-              value: '8901'
             - name: NODE_ENV
               value: 'development'
             - name: DEBUG

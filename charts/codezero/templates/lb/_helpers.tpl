@@ -1,16 +1,16 @@
 {{- if ne .Release.Namespace "codezero" }}
-{{- fail "The CodeZero orchestrator has to be installed in codezero namespace" }}
+{{- fail "The CodeZero LB has to be installed in codezero namespace" }}
 {{- end }}
 
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "orchestrator.name" -}}
+{{- define "lb.name" -}}
 {{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if hasSuffix .Values.orchestrator.name  $name }}
+{{- if hasSuffix .Values.lb.name  $name }}
 {{- $name | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- printf "%s-%s" $name .Values.orchestrator.name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" $name .Values.lb.name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 
@@ -19,7 +19,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "orchestrator.fullname" -}}
+{{- define "lb.fullname" -}}
 {{- $name := default .Chart.Name .Values.nameOverride }}
 {{- if .Values.fullnameOverride }}
 {{- $name = .Values.fullnameOverride }}
@@ -30,20 +30,20 @@ If release name contains chart name it will be used as a full name.
 {{- $name = printf "%s-%s" .Release.Name $name }}
 {{- end }}
 {{- end }}
-{{- if hasSuffix .Values.orchestrator.name $name }}
+{{- if hasSuffix .Values.lb.name $name }}
 {{- $name | trunc 63 | trimSuffix "-" }}
 {{- else }}
-{{- printf "%s-%s" $name .Values.orchestrator.name | trunc 63 | trimSuffix "-" }}
+{{- printf "%s-%s" $name .Values.lb.name | trunc 63 | trimSuffix "-" }}
 {{- end }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "orchestrator.labels" -}}
+{{- define "lb.labels" -}}
 {{ include "codezero.labels" . }}
-{{ include "orchestrator.selectorLabels" . }}
-{{- with .Values.orchestrator.labels }}
+{{ include "lb.selectorLabels" . }}
+{{- with .Values.lb.labels }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
@@ -51,18 +51,18 @@ Common labels
 {{/*
 Selector labels
 */}}
-{{- define "orchestrator.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "orchestrator.name" . }}
+{{- define "lb.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "lb.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Pod labels
 */}}
-{{- define "orchestrator.podLabels" -}}
+{{- define "lb.podLabels" -}}
 {{ include "codezero.podLabels" . }}
-{{ include "orchestrator.selectorLabels" . }}
-{{- with .Values.orchestrator.podLabels }}
+{{ include "lb.selectorLabels" . }}
+{{- with .Values.lb.podLabels }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
@@ -70,9 +70,10 @@ Pod labels
 {{/*
 Pod annotations
 */}}
-{{- define "orchestrator.podAnnotations" -}}
+{{- define "lb.podAnnotations" -}}
 {{ include "codezero.podAnnotations" . }}
-{{- with .Values.orchestrator.podAnnotations }}
+checksum/configmap: {{ include (print .Template.BasePath "/lb/configmap.yaml") . | sha1sum }}
+{{- with .Values.lb.podAnnotations }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
@@ -80,10 +81,10 @@ Pod annotations
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "orchestrator.serviceAccountName" -}}
-{{- if .Values.orchestrator.serviceAccount.create }}
-{{- default (include "orchestrator.fullname" .) .Values.orchestrator.serviceAccount.name }}
+{{- define "lb.serviceAccountName" -}}
+{{- if .Values.lb.serviceAccount.create }}
+{{- default (include "lb.fullname" .) .Values.lb.serviceAccount.name }}
 {{- else }}
-{{- default "default" .Values.orchestrator.serviceAccount.name }}
+{{- default "default" .Values.lb.serviceAccount.name }}
 {{- end }}
 {{- end }}

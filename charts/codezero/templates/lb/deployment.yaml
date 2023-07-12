@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "lb.fullname" . }}
+  labels:
+    {{- include "lb.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.lb.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "lb.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        {{- include "lb.podAnnotations" . | nindent 8 }}
+      labels:
+        {{- include "lb.podLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "lb.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.lb.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "lb.name" . }}
+          securityContext:
+            {{- toYaml .Values.lb.securityContext | nindent 12 }}
+          image: "haproxytech/haproxy-alpine:{{ .Values.lb.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.lb.image.pullPolicy }}
+          args: ["-f", "/usr/local/etc/haproxy/haproxy.cfg"]
+          ports:
+            - containerPort: 8800
+              protocol: TCP
+            - containerPort: 8900
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.lb.resources | nindent 12 }}
+          volumeMounts:
+            - name: haproxy-config
+              mountPath: /usr/local/etc/haproxy/haproxy.cfg
+              subPath: haproxy.cfg
+            - mountPath: /etc/ssl/certs/space
+              name: codezero-cert
+              readOnly: true
+      volumes:
+        - name: haproxy-config
+          configMap:
+            name: {{ include "lb.fullname" . }}
+        - name: codezero-cert
+          secret:
+            secretName: codezero-cert
+      {{- with .Values.lb.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.lb.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.lb.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
