@@ -32,6 +32,10 @@ spec:
               value: /etc/ssl/certs/space/tls.pem
             - name: CZ_CLUSTER_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
+            {{- if .Values.codezero.hub.url }}
+            - name: CZ_HUB_URL
+              value: {{ .Values.codezero.hub.url }}
+            {{- end }}
             - name: CZ_SPACE_ID
               valueFrom:
                 configMapKeyRef:
