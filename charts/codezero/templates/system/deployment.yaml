@@ -46,6 +46,8 @@ spec:
               value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}:8900"
             - name: CZ_PORT
               value: "8800"
+            - name: CZ_ROUTER_IMAGE
+              value: "c6oio/router:{{ .Values.system.image.tag | default .Chart.AppVersion }}"
           envFrom:
             - secretRef:
                 name: {{ include "system.fullname" . }}
