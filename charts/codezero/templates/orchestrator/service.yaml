@@ -11,9 +11,5 @@ spec:
       targetPort: 8900
       protocol: TCP
       name: http
-    - port: 8901
-      targetPort: 8901
-      protocol: TCP
-      name: https
   selector:
     {{- include "orchestrator.selectorLabels" . | nindent 4 }}
