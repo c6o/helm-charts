@@ -23,7 +23,7 @@ spec:
         - name: {{ include "lb.name" . }}
           securityContext:
             {{- toYaml .Values.lb.securityContext | nindent 12 }}
-          image: "haproxytech/haproxy-alpine:{{ .Values.lb.image.tag | default .Chart.AppVersion }}"
+          image: "haproxytech/haproxy-alpine:{{ .Values.lb.image.tag }}"
           imagePullPolicy: {{ .Values.lb.image.pullPolicy }}
           args: ["-f", "/usr/local/etc/haproxy/haproxy.cfg"]
           ports:
