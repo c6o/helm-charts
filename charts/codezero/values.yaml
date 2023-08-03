@@ -5,21 +5,21 @@
 nameOverride: ""
 fullnameOverride: ""
 
-codezero:
-  name: codezero
-  hub:
-    url: https://api.codezero.io
-  space:
-    token: ""
+image:
+  tag: pasley
+hub:
+  url: https://api.codezero.io
+space:
+  token: ""
 
-  podAnnotations: { }
-  labels: { }
-  podLabels: { }
+podAnnotations: { }
+labels: { }
+podLabels: { }
 
 system:
   name: system
   image:
-    tag: pasley
+    tag: ""
     pullPolicy: Always
   replicaCount: 1
 
@@ -43,7 +43,7 @@ system:
 orchestrator:
   name: orchestrator
   image:
-    tag: pasley
+    tag: ""
     pullPolicy: Always
   replicaCount: 1
 

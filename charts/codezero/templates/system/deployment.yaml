@@ -23,7 +23,7 @@ spec:
         - name: {{ include "system.name" . }}
           securityContext:
             {{- toYaml .Values.system.securityContext | nindent 12 }}
-          image: "c6oio/system:{{ .Values.system.image.tag | default .Chart.AppVersion }}"
+          image: "c6oio/system:{{ .Values.system.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.system.image.pullPolicy }}
           env:
             - name: CZ_SPACE_CA_CERT
@@ -32,9 +32,9 @@ spec:
               value: /etc/ssl/certs/space/tls.pem
             - name: CZ_CLUSTER_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
-            {{- if .Values.codezero.hub.url }}
+            {{- if .Values.hub.url }}
             - name: CZ_HUB_URL
-              value: {{ .Values.codezero.hub.url }}
+              value: {{ .Values.hub.url }}
             {{- end }}
             - name: CZ_SPACE_ID
               valueFrom:
@@ -47,7 +47,7 @@ spec:
             - name: CZ_PORT
               value: "8800"
             - name: CZ_ROUTER_IMAGE
-              value: "c6oio/router:{{ .Values.system.image.tag | default .Chart.AppVersion }}"
+              value: "c6oio/router:{{ .Values.system.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
           envFrom:
             - secretRef:
                 name: {{ include "system.fullname" . }}

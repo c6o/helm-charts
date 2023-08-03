@@ -2,12 +2,7 @@
 Expand the name of the chart.
 */}}
 {{- define "codezero.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if hasSuffix .Values.codezero.name  $name }}
-{{- $name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" $name .Values.codezero.name | trunc 63 | trimSuffix "-" }}
-{{- end }}
+{{- .Values.nameOverride | default .Chart.Name | trunc 63 | trimSuffix "-" -}}
 {{- end }}
 
 {{/*
@@ -16,22 +11,16 @@ We truncate at 63 chars because some Kubernetes name fields are limited to this 
 If release name contains chart name it will be used as a full name.
 */}}
 {{- define "codezero.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if .Values.fullnameOverride }}
-{{- $name = .Values.fullnameOverride }}
-{{- else }}
-{{- if contains $name .Release.Name }}
-{{- $name = .Release.Name }}
-{{- else }}
-{{- $name = printf "%s-%s" .Release.Name $name }}
-{{- end }}
-{{- end }}
-{{- if hasSuffix .Values.codezero.name $name }}
-{{- $name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" $name .Values.codezero.name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- end }}
+{{- if .Values.fullnameOverride -}}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- if contains .Values.nameOverride .Release.Name -}}
+{{- .Release.Name | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s" .Release.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+{{- end -}}
+{{- end -}}
 
 {{/*
 Create chart name and version as used by the chart label.
@@ -50,7 +39,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/part-of: codezero
-{{- with .Values.codezero.labels }}
+{{- with .Values.labels }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
@@ -60,7 +49,7 @@ Pod labels
 */}}
 {{- define "codezero.podLabels" -}}
 {{ include "codezero.labels" . }}
-{{- with .Values.codezero.podLabels }}
+{{- with .Values.podLabels }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
@@ -69,7 +58,7 @@ Pod labels
 Pod annotations
 */}}
 {{- define "codezero.podAnnotations" -}}
-{{- with .Values.codezero.podAnnotations }}
+{{- with .Values.podAnnotations }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
