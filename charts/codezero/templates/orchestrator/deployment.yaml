@@ -23,7 +23,7 @@ spec:
         - name: {{ include "orchestrator.name" . }}
           securityContext:
             {{- toYaml .Values.orchestrator.securityContext | nindent 12 }}
-          image: "c6oio/orchestrator:{{ .Values.orchestrator.image.tag | default .Chart.AppVersion }}"
+          image: "c6oio/orchestrator:{{ .Values.orchestrator.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.orchestrator.image.pullPolicy }}
           env:
             - name: CZ_SPACE_ID
@@ -38,9 +38,9 @@ spec:
               value: /etc/ssl/certs/space/tls.pem
             - name: CZ_CLUSTER_CERT_KEY
               value: /etc/ssl/certs/space/tls.key
-            {{- if .Values.codezero.hub.url }}
+            {{- if .Values.hub.url }}
             - name: CZ_HUB_URL
-              value: {{ printf "%s/" .Values.codezero.hub.url }}
+              value: {{ printf "%s/" .Values.hub.url }}
             {{- end }}
             - name: CZ_PORT
               value: '8900'
