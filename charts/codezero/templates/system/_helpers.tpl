@@ -2,39 +2,8 @@
 {{- fail "The CodeZero system has to be installed in codezero namespace" }}
 {{- end }}
 
-{{/*
-Expand the name of the chart.
-*/}}
 {{- define "system.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if hasSuffix .Values.system.name  $name }}
-{{- $name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" $name .Values.system.name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "system.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if .Values.fullnameOverride }}
-{{- $name = .Values.fullnameOverride }}
-{{- else }}
-{{- if contains $name .Release.Name }}
-{{- $name = .Release.Name }}
-{{- else }}
-{{- $name = printf "%s-%s" .Release.Name $name }}
-{{- end }}
-{{- end }}
-{{- if hasSuffix .Values.system.name $name }}
-{{- $name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" $name .Values.system.name | trunc 63 | trimSuffix "-" }}
-{{- end }}
+system
 {{- end }}
 
 {{/*
@@ -74,16 +43,5 @@ Pod annotations
 {{ include "codezero.podAnnotations" . }}
 {{- with .Values.system.podAnnotations }}
 {{ . | toYaml }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "system.serviceAccountName" -}}
-{{- if .Values.system.serviceAccount.create }}
-{{- default (include "system.fullname" .) .Values.system.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.system.serviceAccount.name }}
 {{- end }}
 {{- end }}

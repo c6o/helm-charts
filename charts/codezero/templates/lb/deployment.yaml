@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "lb.fullname" . }}
+  name: {{ include "lb.name" . }}
   labels:
     {{- include "lb.labels" . | nindent 4 }}
 spec:
@@ -16,7 +16,7 @@ spec:
       labels:
         {{- include "lb.podLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "lb.serviceAccountName" . }}
+      serviceAccountName: {{ include "lb.name" . }}
       securityContext:
         {{- toYaml .Values.lb.podSecurityContext | nindent 8 }}
       containers:
@@ -38,15 +38,15 @@ spec:
               mountPath: /usr/local/etc/haproxy/haproxy.cfg
               subPath: haproxy.cfg
             - mountPath: /etc/ssl/certs/space
-              name: codezero-cert
+              name: space-cert
               readOnly: true
       volumes:
         - name: haproxy-config
           configMap:
-            name: {{ include "lb.fullname" . }}
-        - name: codezero-cert
+            name: {{ include "lb.name" . }}
+        - name: space-cert
           secret:
-            secretName: codezero-cert
+            secretName: space-cert
       {{- with .Values.lb.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
