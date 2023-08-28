@@ -8,7 +8,7 @@ fullnameOverride: ""
 image:
   tag: pasley
 hub:
-  url: https://api.codezero.io
+  url: https://hub.codezero.io
 space:
   token: ""
 
