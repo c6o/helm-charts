@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "lb.fullname" . }}
+  name: {{ include "lb.name" . }}
   labels:
     {{- include "lb.labels" . | nindent 4 }}
 data:
@@ -21,11 +21,11 @@ data:
       default_backend system
 
     backend system
-      server system codezero-system:8800 check
+      server system system.codezero:8800 check
 
     frontend orchestrator
       bind :8900 ssl crt /etc/ssl/certs/space/server.pem
       default_backend orchestrator
 
     backend orchestrator
-      server orchestrator codezero-orchestrator:8900 check
+      server orchestrator orchestrator.codezero:8900 check

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "system.fullname" . }}
+  name: {{ include "system.name" . }}
   labels:
     {{- include "system.labels" . | nindent 4 }}
 spec:
@@ -16,7 +16,7 @@ spec:
       labels:
         {{- include "system.podLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "system.serviceAccountName" . }}
+      serviceAccountName: {{ include "system.name" . }}
       securityContext:
         {{- toYaml .Values.system.podSecurityContext | nindent 8 }}
       containers:
@@ -39,18 +39,18 @@ spec:
             - name: CZ_SPACE_ID
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "codezero.fullname" . }}
+                  name: {{ include "codezero.name" . }}
                   key: spaceID
                   optional: true
             - name: CZ_ORCHESTRATOR_AUTHORITY
-              value: "{{ include "orchestrator.fullname" . }}.{{ .Release.Namespace }}:8900"
+              value: "{{ include "orchestrator.name" . }}.{{ .Release.Namespace }}:8900"
             - name: CZ_PORT
               value: "8800"
             - name: CZ_ROUTER_IMAGE
               value: "c6oio/router:{{ .Values.system.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
           envFrom:
             - secretRef:
-                name: {{ include "system.fullname" . }}
+                name: {{ include "system.name" . }}
           ports:
             - containerPort: 8800
               protocol: TCP
@@ -58,12 +58,12 @@ spec:
             {{- toYaml .Values.system.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/ssl/certs/space
-              name: codezero-cert
+              name: space-cert
               readOnly: true
       volumes:
-        - name: codezero-cert
+        - name: space-cert
           secret:
-            secretName: codezero-cert
+            secretName: space-cert
             optional: true
       {{- with .Values.system.nodeSelector }}
       nodeSelector:

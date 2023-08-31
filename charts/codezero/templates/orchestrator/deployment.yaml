@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "orchestrator.fullname" . }}
+  name: {{ include "orchestrator.name" . }}
   labels:
     {{- include "orchestrator.labels" . | nindent 4 }}
 spec:
@@ -16,7 +16,7 @@ spec:
       labels:
         {{- include "orchestrator.podLabels" . | nindent 8 }}
     spec:
-      serviceAccountName: {{ include "orchestrator.serviceAccountName" . }}
+      serviceAccountName: {{ include "orchestrator.name" . }}
       securityContext:
         {{- toYaml .Values.orchestrator.podSecurityContext | nindent 8 }}
       containers:
@@ -29,7 +29,7 @@ spec:
             - name: CZ_SPACE_ID
               valueFrom:
                 configMapKeyRef:
-                  name: {{ include "codezero.fullname" . }}
+                  name: {{ include "codezero.name" . }}
                   key: spaceID
                   optional: true
             - name: CZ_SPACE_CA_CERT
@@ -55,12 +55,12 @@ spec:
             {{- toYaml .Values.orchestrator.resources | nindent 12 }}
           volumeMounts:
             - mountPath: /etc/ssl/certs/space
-              name: codezero-cert
+              name: space-cert
               readOnly: true
       volumes:
-        - name: codezero-cert
+        - name: space-cert
           secret:
-            secretName: codezero-cert
+            secretName: space-cert
       {{- with .Values.orchestrator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

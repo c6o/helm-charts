@@ -1,40 +1,9 @@
 {{- if ne .Release.Namespace "codezero" }}
-{{- fail "The CodeZero orchestrator has to be installed in codezero namespace" }}
+{{- fail "The Codezero orchestrator has to be installed in codezero namespace" }}
 {{- end }}
 
-{{/*
-Expand the name of the chart.
-*/}}
 {{- define "orchestrator.name" -}}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if hasSuffix .Values.orchestrator.name  $name }}
-{{- $name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" $name .Values.orchestrator.name | trunc 63 | trimSuffix "-" }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create a default fully qualified app name.
-We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
-If release name contains chart name it will be used as a full name.
-*/}}
-{{- define "orchestrator.fullname" -}}
-{{- $name := default .Chart.Name .Values.nameOverride }}
-{{- if .Values.fullnameOverride }}
-{{- $name = .Values.fullnameOverride }}
-{{- else }}
-{{- if contains $name .Release.Name }}
-{{- $name = .Release.Name }}
-{{- else }}
-{{- $name = printf "%s-%s" .Release.Name $name }}
-{{- end }}
-{{- end }}
-{{- if hasSuffix .Values.orchestrator.name $name }}
-{{- $name | trunc 63 | trimSuffix "-" }}
-{{- else }}
-{{- printf "%s-%s" $name .Values.orchestrator.name | trunc 63 | trimSuffix "-" }}
-{{- end }}
+orchestrator
 {{- end }}
 
 {{/*
@@ -74,16 +43,5 @@ Pod annotations
 {{ include "codezero.podAnnotations" . }}
 {{- with .Values.orchestrator.podAnnotations }}
 {{ . | toYaml }}
-{{- end }}
-{{- end }}
-
-{{/*
-Create the name of the service account to use
-*/}}
-{{- define "orchestrator.serviceAccountName" -}}
-{{- if .Values.orchestrator.serviceAccount.create }}
-{{- default (include "orchestrator.fullname" .) .Values.orchestrator.serviceAccount.name }}
-{{- else }}
-{{- default "default" .Values.orchestrator.serviceAccount.name }}
 {{- end }}
 {{- end }}

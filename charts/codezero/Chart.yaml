@@ -1,6 +1,6 @@
 apiVersion: v2
 name: codezero
-description: CodeZero 2.x system for Kubernetes
+description: Codezero 2.x system for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
 #
