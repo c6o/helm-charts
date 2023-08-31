@@ -1,5 +1,5 @@
 {{- if ne .Release.Namespace "codezero" }}
-{{- fail "The CodeZero LB has to be installed in codezero namespace" }}
+{{- fail "The Codezero LB has to be installed in codezero namespace" }}
 {{- end }}
 
 {{- define "lb.name" -}}

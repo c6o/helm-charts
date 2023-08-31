@@ -1,5 +1,5 @@
 {{- if ne .Release.Namespace "codezero" }}
-{{- fail "The CodeZero orchestrator has to be installed in codezero namespace" }}
+{{- fail "The Codezero orchestrator has to be installed in codezero namespace" }}
 {{- end }}
 
 {{- define "orchestrator.name" -}}

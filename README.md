@@ -1,1 +1,1 @@
-# Helm charts for CodeZero
+# Helm charts for Codezero
