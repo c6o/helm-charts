@@ -45,7 +45,7 @@ spec:
             - name: CZ_PORT
               value: '8900'
             - name: NODE_ENV
-              value: 'development'
+              value: 'production'
             - name: DEBUG
               value: '*,-engine*,-nodemon*,-*expo*,-babel*,-winston*,-follow-redirects*'
           ports:
