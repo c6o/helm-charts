@@ -18,8 +18,8 @@ jobs:
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v1'
         with:
-          workload_identity_provider: 'projects/2314364601/locations/global/workloadIdentityPools/c6o-github-action-pool/providers/c6o-github-provider'
-          service_account: 'github-action-key@c6o-production.iam.gserviceaccount.com'
+          workload_identity_provider: 'projects/2314364601/locations/global/workloadIdentityPools/github-actions/providers/github-actions-provider '
+          service_account: 'github-actions@c6o-production.iam.gserviceaccount.com'
       - name: Setup GCloud
         uses: google-github-actions/setup-gcloud@v1
         with:
