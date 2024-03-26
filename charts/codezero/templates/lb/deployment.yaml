@@ -19,6 +19,14 @@ spec:
       serviceAccountName: {{ include "lb.name" . }}
       securityContext:
         {{- toYaml .Values.lb.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: wait-for-cert
+          image: public.ecr.aws/docker/library/busybox:1.36
+          command: ["sh", "-c", "for i in {1..30}; do sleep 1; if [ -e /etc/ssl/certs/space/server.pem ]; then exit 0; fi; done; exit 1"]
+          volumeMounts:
+            - mountPath: /etc/ssl/certs/space
+              name: space-cert
+              readOnly: true
       containers:
         - name: {{ include "lb.name" . }}
           securityContext:
