@@ -20,8 +20,8 @@ spec:
       securityContext:
         {{- toYaml .Values.system.podSecurityContext | nindent 8 }}
       initContainers:
-        - name: register-space
-          image: "c6oio/spaceinit:a5962c2"
+        - name: space-init
+          image: "c6oio/spaceinit:955bf44"
           imagePullPolicy: {{ .Values.system.image.pullPolicy }}
           env:
             - name: CZ_CLUSTER_CERT
@@ -41,7 +41,7 @@ spec:
               readOnly: true
         - name: wait-for-orchestrator
           image: public.ecr.aws/docker/library/busybox:1.36
-          command: ["sh", "-c", "for i in {1..30}; do if wget --spider --quiet 'http://orchestrator:8900'; then exit 0; fi; sleep 0.5; done; exit 1"]
+          command: ["sh", "-c", "for i in {1..20}; do if wget --spider --quiet 'http://orchestrator:8900'; then exit 0; fi; sleep 0.5; done; exit 1"]
       containers:
         - name: {{ include "system.name" . }}
           securityContext:
