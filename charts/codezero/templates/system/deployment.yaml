@@ -19,6 +19,29 @@ spec:
       serviceAccountName: {{ include "system.name" . }}
       securityContext:
         {{- toYaml .Values.system.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: register-space
+          image: "c6oio/spaceinit:a5962c2"
+          imagePullPolicy: {{ .Values.system.image.pullPolicy }}
+          env:
+            - name: CZ_CLUSTER_CERT
+              value: /etc/ssl/certs/space/tls.pem
+            - name: CZ_CLUSTER_CERT_KEY
+              value: /etc/ssl/certs/space/tls.key
+            {{- if .Values.hub.url }}
+            - name: CZ_HUB_URL
+              value: {{ .Values.hub.url }}
+            {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ include "system.name" . }}
+          volumeMounts:
+            - mountPath: /etc/ssl/certs/space
+              name: space-cert
+              readOnly: true
+        - name: wait-for-orchestrator
+          image: public.ecr.aws/docker/library/busybox:1.36
+          command: ["sh", "-c", "for i in {1..30}; do if wget --spider --quiet 'http://orchestrator:8900'; then exit 0; fi; sleep 0.5; done; exit 1"]
       containers:
         - name: {{ include "system.name" . }}
           securityContext:
