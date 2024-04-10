@@ -21,7 +21,7 @@ spec:
         {{- toYaml .Values.system.podSecurityContext | nindent 8 }}
       initContainers:
         - name: space-init
-          image: "c6oio/spaceinit:e726047"
+          image: "c6oio/spaceinit:6937d6c"
           imagePullPolicy: {{ .Values.system.image.pullPolicy }}
           env:
             - name: CZ_CLUSTER_CERT
