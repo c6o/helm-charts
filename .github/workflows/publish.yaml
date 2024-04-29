@@ -26,6 +26,7 @@ jobs:
           project_id: c6o-production
       - name: Deploy
         run: |
+          curl https://storage.googleapis.com/c6o-releases/helm-charts/index.yaml --output ./index.yaml
           helm package ./charts/* -d ./tmp/
-          helm repo index tmp --url https://charts.codezero.io
+          helm repo index tmp --url https://charts.codezero.io --merge ./index.yaml
           gsutil cp ./tmp/* gs://c6o-releases/helm-charts
