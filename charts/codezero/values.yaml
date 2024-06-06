@@ -56,6 +56,10 @@ orchestrator:
   tolerations: [ ]
   affinity: { }
 
+  opa:
+    url: ""
+    enabled: false
+
   serviceAccount:
     create: true
     annotations: { }
