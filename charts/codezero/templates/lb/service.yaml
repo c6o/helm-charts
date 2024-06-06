@@ -4,6 +4,8 @@ metadata:
   name: {{ include "codezero.name" . }}
   labels:
     {{- include "lb.labels" . | nindent 4 }}
+  annotations:
+    {{ toYaml .Values.lb.service.annotations | indent 4 | trim}}
 spec:
   type: {{ .Values.lb.service.type }}
   ports:

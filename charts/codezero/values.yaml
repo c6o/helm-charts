@@ -97,4 +97,5 @@ lb:
     name: ""
 
   service:
+    annotations: { }
     type: LoadBalancer
