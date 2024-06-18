@@ -8,6 +8,10 @@ hub:
   url: https://hub.codezero.io
 space:
   token: ""
+  name: ""
+org:
+  apikey: ""
+  id: ""
 
 podAnnotations: { }
 labels: { }

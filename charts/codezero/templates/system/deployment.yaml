@@ -30,6 +30,12 @@ spec:
             - name: CZ_HUB_URL
               value: {{ .Values.hub.url }}
             {{- end }}
+            - name: CZ_HUB_SPACE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "codezero.name" . }}
+                  key: spaceName
+                  optional: true
           envFrom:
             - secretRef:
                 name: {{ include "system.name" . }}
