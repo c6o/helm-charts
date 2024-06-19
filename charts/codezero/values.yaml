@@ -12,6 +12,9 @@ space:
 org:
   apikey: ""
   id: ""
+opa:
+  url: ""
+  enabled: false
 
 podAnnotations: { }
 labels: { }
@@ -60,9 +63,6 @@ orchestrator:
   tolerations: [ ]
   affinity: { }
 
-  opa:
-    url: ""
-    enabled: false
 
   serviceAccount:
     create: true
