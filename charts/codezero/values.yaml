@@ -36,7 +36,7 @@ system:
     runAsNonRoot: true
     runAsUser: 1000
     runAsGroup: 1000
-    allowPrivilegeEscalation: true
+    allowPrivilegeEscalation: false
     capabilities:
       drop:
         - ALL
@@ -69,7 +69,7 @@ orchestrator:
     runAsNonRoot: true
     runAsUser: 1000
     runAsGroup: 1000
-    allowPrivilegeEscalation: true
+    allowPrivilegeEscalation: false
     capabilities:
       drop:
         - ALL
@@ -103,7 +103,7 @@ lb:
     runAsNonRoot: true
     runAsUser: 1000
     runAsGroup: 1000
-    allowPrivilegeEscalation: true
+    allowPrivilegeEscalation: false
     capabilities:
       drop:
         - ALL
