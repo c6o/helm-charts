@@ -21,6 +21,8 @@ spec:
         {{- toYaml .Values.lb.podSecurityContext | nindent 8 }}
       initContainers:
         - name: wait-for-cert
+          securityContext:
+            {{- toYaml .Values.lb.securityContext | nindent 12 }}
           image: public.ecr.aws/docker/library/busybox:1.36
           command: ["sh", "-c", "for i in `seq 1 20`; do sleep 0.5; if [ -e /etc/ssl/certs/space/server.pem ]; then exit 0; fi; done; exit 1"]
           volumeMounts:

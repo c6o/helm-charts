@@ -21,6 +21,8 @@ spec:
         {{- toYaml .Values.system.podSecurityContext | nindent 8 }}
       initContainers:
         - name: space-init
+          securityContext:
+            {{- toYaml .Values.system.securityContext | nindent 12 }}
           image: "c6oio/spaceinit:{{ default .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.system.image.pullPolicy }}
           env:
@@ -44,6 +46,8 @@ spec:
               name: space-cert
               readOnly: true
         - name: wait-for-orchestrator
+          securityContext:
+            {{- toYaml .Values.system.securityContext | nindent 12 }}
           image: public.ecr.aws/docker/library/busybox:1.36
           command: ["sh", "-c", "for i in `seq 1 60`; do if wget --spider --quiet 'http://orchestrator:8900'; then exit 0; fi; sleep 0.5; done; exit 1"]
       containers:
