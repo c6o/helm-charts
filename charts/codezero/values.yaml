@@ -31,6 +31,8 @@ system:
   labels: { }
   podLabels: { }
 
+  router:
+    privilegedAccess: false
   podSecurityContext: { }
   securityContext:
     runAsNonRoot: true
