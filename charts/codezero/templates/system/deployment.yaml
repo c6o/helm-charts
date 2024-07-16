@@ -80,7 +80,7 @@ spec:
             - name: CZ_ROUTER_IMAGE
               value: "c6oio/router:{{ .Values.system.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
             - name: CZ_ROUTER_PRIVILEGED_ACCESS
-              value: "{{ .Values.system.router.privilegedAccess }}"
+              value: "{{ .Values.router.privilegedAccess }}"
           envFrom:
             - secretRef:
                 name: {{ include "system.name" . }}

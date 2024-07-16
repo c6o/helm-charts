@@ -20,6 +20,9 @@ podAnnotations: { }
 labels: { }
 podLabels: { }
 
+router:
+  privilegedAccess: false
+
 system:
   name: system
   image:
@@ -31,8 +34,6 @@ system:
   labels: { }
   podLabels: { }
 
-  router:
-    privilegedAccess: false
   podSecurityContext: { }
   securityContext:
     runAsNonRoot: true
