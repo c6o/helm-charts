@@ -126,3 +126,6 @@ lb:
   service:
     annotations: { }
     type: LoadBalancer
+
+operator:
+  enabled: false
