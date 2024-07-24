@@ -18,7 +18,7 @@ helm repo add --force-update codezero https://charts.codezero.io
 helm upgrade --namespace=codezero codezero codezero/codezero
 ```
 
-## Uninstallingthe Chart
+## Uninstalling the Chart
 
 ```sh
 helm -n codezero uninstall codezero
