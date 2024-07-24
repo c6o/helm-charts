@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 image:
-  tag: 2.5.1
+  tag: 2.5.2
 hub:
   url: https://hub.codezero.io
 space:
