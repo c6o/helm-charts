@@ -2,7 +2,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: operator-role
+  name: {{ include "codezero.name" . }}:operator
 rules:
 - apiGroups:
   - apps
@@ -23,7 +23,7 @@ rules:
   verbs:
   - get
 - apiGroups:
-  - apps
+  - ""
   resources:
   - services
   verbs:
@@ -35,7 +35,7 @@ rules:
   - update
   - watch
 - apiGroups:
-  - apps
+  - ""
   resources:
   - services/status
   verbs:
