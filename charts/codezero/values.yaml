@@ -24,7 +24,9 @@ router:
   privilegedAccess: false
 
 operator:
+  # when true runs system and orchestrator in operator mode
   enabled: false
+
   name: operator
   image:
     tag: ""
@@ -46,7 +48,7 @@ operator:
         - ALL
     seccompProfile:
       type: RuntimeDefault
-      
+
   nodeSelector: { }
   tolerations: [ ]
   affinity: { }
