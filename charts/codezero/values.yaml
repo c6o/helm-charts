@@ -15,9 +15,6 @@ org:
 opa:
   url: ""
   enabled: false
-operator:
-  enabled: false
-
 
 podAnnotations: { }
 labels: { }
@@ -25,6 +22,34 @@ podLabels: { }
 
 router:
   privilegedAccess: false
+
+operator:
+  enabled: false
+  name: operator
+  image:
+    tag: ""
+    pullPolicy: Always
+  replicaCount: 1
+
+  podAnnotations: { }
+  labels: { }
+  podLabels: { }
+
+  podSecurityContext: { }
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+        - ALL
+    seccompProfile:
+      type: RuntimeDefault
+      
+  nodeSelector: { }
+  tolerations: [ ]
+  affinity: { }
 
 system:
   name: system
