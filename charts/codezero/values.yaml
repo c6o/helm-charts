@@ -15,6 +15,9 @@ org:
 opa:
   url: ""
   enabled: false
+operator:
+  enabled: false
+
 
 podAnnotations: { }
 labels: { }
@@ -126,6 +129,3 @@ lb:
   service:
     annotations: { }
     type: LoadBalancer
-
-operator:
-  enabled: false

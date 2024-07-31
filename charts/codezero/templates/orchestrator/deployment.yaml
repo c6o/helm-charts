@@ -58,7 +58,7 @@ spec:
             {{- end }}
             {{- if .Values.operator.enabled }}
             - name: CZ_OPERATOR_ENABLED
-              value: true
+              value: "true"
             {{- end}}
             - name: CZ_PORT
               value: '8900'

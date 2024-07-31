@@ -69,7 +69,7 @@ spec:
             {{- end }}
             {{- if .Values.operator.enabled }}
             - name: CZ_OPERATOR_ENABLED
-              value: true
+              value: "true"
             {{- end}}
             - name: CZ_SPACE_ID
               valueFrom:
