@@ -170,7 +170,6 @@ spec:
                 - revision
                 type: object
             required:
-            - originSelector
             - routerConfig
             type: object
         type: object
