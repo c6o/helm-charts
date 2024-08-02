@@ -23,6 +23,32 @@ rules:
   verbs:
   - get
 - apiGroups:
+  - codezero.io
+  resources:
+  - serves
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - codezero.io
+  resources:
+  - serves/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - codezero.io
+  resources:
+  - serves/status
+  verbs:
+  - get
+  - patch
+  - update
+- apiGroups:
   - ""
   resources:
   - services
@@ -40,29 +66,3 @@ rules:
   - services/status
   verbs:
   - get
-- apiGroups:
-  - routing.codezero.io
-  resources:
-  - serves
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - routing.codezero.io
-  resources:
-  - serves/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - routing.codezero.io
-  resources:
-  - serves/status
-  verbs:
-  - get
-  - patch
-  - update

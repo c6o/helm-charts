@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.15.0
-  name: serves.routing.codezero.io
+  name: serves.codezero.io
 spec:
-  group: routing.codezero.io
+  group: codezero.io
   names:
     kind: Serve
     listKind: ServeList
@@ -14,7 +14,7 @@ spec:
     singular: serve
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - name: v1beta1
     schema:
       openAPIV3Schema:
         description: Serve is the Schema for the serves API.
