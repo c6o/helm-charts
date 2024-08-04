@@ -67,6 +67,10 @@ spec:
             - name: CZ_HUB_URL
               value: {{ .Values.hub.url }}
             {{- end }}
+            {{- if .Values.operator.enabled }}
+            - name: CZ_OPERATOR_ENABLED
+              value: "true"
+            {{- end}}
             - name: CZ_SPACE_ID
               valueFrom:
                 configMapKeyRef:
