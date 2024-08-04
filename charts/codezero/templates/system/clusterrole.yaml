@@ -9,7 +9,7 @@ rules:
 - apiGroups: ["discovery.k8s.io"]
   resources: ["endpointslices"]
   verbs: ["list", "watch"]
-- apiGroups: ["routing.codezero.io"]
+- apiGroups: ["codezero.io"]
   resources: ["serves"]
   verbs:
   - create
