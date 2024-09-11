@@ -25,7 +25,7 @@ router:
 
 operator:
   # when true runs system and orchestrator in operator mode
-  enabled: false
+  enabled: true
 
   name: operator
   image:
