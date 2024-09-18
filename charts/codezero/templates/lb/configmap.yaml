@@ -22,10 +22,3 @@ data:
 
     backend system
       server system system.codezero:8800 check
-
-    frontend orchestrator
-      bind :8900 ssl crt /etc/ssl/certs/space/server.pem
-      default_backend orchestrator
-
-    backend orchestrator
-      server orchestrator orchestrator.codezero:8900 check

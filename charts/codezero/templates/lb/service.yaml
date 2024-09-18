@@ -13,9 +13,5 @@ spec:
       targetPort: 8800
       protocol: TCP
       name: system-http
-    - port: 8900
-      targetPort: 8900
-      protocol: TCP
-      name: orchestrator-http
   selector:
     {{- include "lb.selectorLabels" . | nindent 4 }}

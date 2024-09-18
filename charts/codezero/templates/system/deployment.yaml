@@ -45,11 +45,6 @@ spec:
             - mountPath: /etc/ssl/certs/space
               name: space-cert
               readOnly: true
-        - name: wait-for-orchestrator
-          securityContext:
-            {{- toYaml .Values.system.securityContext | nindent 12 }}
-          image: public.ecr.aws/docker/library/busybox:1.36
-          command: ["sh", "-c", "for i in `seq 1 60`; do if wget --spider --quiet 'http://orchestrator:8900'; then exit 0; fi; sleep 0.5; done; exit 1"]
       containers:
         - name: {{ include "system.name" . }}
           securityContext:
@@ -67,18 +62,12 @@ spec:
             - name: CZ_HUB_URL
               value: {{ .Values.hub.url }}
             {{- end }}
-            {{- if .Values.operator.enabled }}
-            - name: CZ_OPERATOR_ENABLED
-              value: "true"
-            {{- end}}
             - name: CZ_SPACE_ID
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "codezero.name" . }}
                   key: spaceID
                   optional: true
-            - name: CZ_ORCHESTRATOR_AUTHORITY
-              value: "{{ include "orchestrator.name" . }}.{{ .Release.Namespace }}:8900"
             - name: CZ_PORT
               value: "8800"
             - name: CZ_ROUTER_IMAGE
