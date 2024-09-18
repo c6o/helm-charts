@@ -24,9 +24,6 @@ router:
   privilegedAccess: false
 
 operator:
-  # when true runs system and orchestrator in operator mode
-  enabled: true
-
   name: operator
   image:
     tag: ""
@@ -80,40 +77,6 @@ system:
   nodeSelector: { }
   tolerations: [ ]
   affinity: { }
-
-  serviceAccount:
-    create: true
-    annotations: { }
-    name: ""
-
-orchestrator:
-  name: orchestrator
-  image:
-    tag: ""
-    pullPolicy: Always
-  replicaCount: 1
-
-  podAnnotations: { }
-  labels: { }
-  podLabels: { }
-
-  podSecurityContext: { }
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    seccompProfile:
-      type: RuntimeDefault
-
-  resources: { }
-  nodeSelector: { }
-  tolerations: [ ]
-  affinity: { }
-
 
   serviceAccount:
     create: true
