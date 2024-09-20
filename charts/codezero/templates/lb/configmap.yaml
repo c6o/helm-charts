@@ -12,9 +12,9 @@ data:
 
     defaults
       log global
-      timeout client 60s
       timeout connect 60s
-      timeout server 60s
+      timeout client 3600s
+      timeout server 3600s
 
     frontend system
       bind :8800 ssl crt /etc/ssl/certs/space/server.pem
