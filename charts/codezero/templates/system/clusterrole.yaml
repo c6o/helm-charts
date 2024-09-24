@@ -4,6 +4,9 @@ metadata:
   name: {{ include "codezero.name" . }}:system
 rules:
 - apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list", "watch"]
+- apiGroups: [""]
   resources: ["services", "pods"]
   verbs: ["get", "watch", "list", "patch", "create", "delete"]
 - apiGroups: ["discovery.k8s.io"]
