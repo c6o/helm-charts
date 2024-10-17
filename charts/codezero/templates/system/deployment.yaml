@@ -74,6 +74,8 @@ spec:
               value: "c6oio/router:{{ .Values.system.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
             - name: CZ_ROUTER_PRIVILEGED_ACCESS
               value: "{{ .Values.router.privilegedAccess }}"
+            - name: CZ_TRACING_ENABLED
+              value: "{{ .Values.tracing.enabled }}"
           envFrom:
             - secretRef:
                 name: {{ include "system.name" . }}
