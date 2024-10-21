@@ -16,9 +16,9 @@ data:
       timeout client 3600s
       timeout server 3600s
 
-    frontend system
+    frontend spaceagent
       bind :8800 ssl crt /etc/ssl/certs/space/server.pem
-      default_backend system
+      default_backend spaceagent
 
-    backend system
-      server system system.codezero:8800 check
+    backend spaceagent
+      server spaceagent spaceagent.codezero:8800 check

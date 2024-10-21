@@ -2,17 +2,17 @@
 {{- fail "Codezero has to be installed in codezero namespace" }}
 {{- end }}
 
-{{- define "operator.name" -}}
-operator
+{{- define "spaceagent.name" -}}
+spaceagent
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "operator.labels" -}}
+{{- define "spaceagent.labels" -}}
 {{ include "codezero.labels" . }}
-{{ include "operator.selectorLabels" . }}
-{{- with .Values.operator.labels }}
+{{ include "spaceagent.selectorLabels" . }}
+{{- with .Values.spaceagent.labels }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
@@ -20,18 +20,18 @@ Common labels
 {{/*
 Selector labels
 */}}
-{{- define "operator.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "operator.name" . }}
+{{- define "spaceagent.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "spaceagent.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Pod labels
 */}}
-{{- define "operator.podLabels" -}}
+{{- define "spaceagent.podLabels" -}}
 {{ include "codezero.podLabels" . }}
-{{ include "operator.selectorLabels" . }}
-{{- with .Values.operator.podLabels }}
+{{ include "spaceagent.selectorLabels" . }}
+{{- with .Values.spaceagent.podLabels }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
@@ -39,9 +39,9 @@ Pod labels
 {{/*
 Pod annotations
 */}}
-{{- define "operator.podAnnotations" -}}
+{{- define "spaceagent.podAnnotations" -}}
 {{ include "codezero.podAnnotations" . }}
-{{- with .Values.operator.podAnnotations }}
+{{- with .Values.spaceagent.podAnnotations }}
 {{ . | toYaml }}
 {{- end }}
 {{- end }}

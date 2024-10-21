@@ -52,8 +52,8 @@ operator:
   tolerations: [ ]
   affinity: { }
 
-system:
-  name: system
+spaceagent:
+  name: spaceagent
   image:
     tag: ""
     pullPolicy: Always
