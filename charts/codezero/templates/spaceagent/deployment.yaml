@@ -19,32 +19,6 @@ spec:
       serviceAccountName: {{ include "spaceagent.name" . }}
       securityContext:
         {{- toYaml .Values.spaceagent.podSecurityContext | nindent 8 }}
-      initContainers:
-        - name: space-init
-          securityContext:
-            {{- toYaml .Values.spaceagent.securityContext | nindent 12 }}
-          image: "c6oio/spaceinit:{{ default .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.spaceagent.image.pullPolicy }}
-          env:
-            - name: CZ_CLUSTER_CERT
-              value: /etc/ssl/certs/space/tls.pem
-            {{- if .Values.hub.url }}
-            - name: CZ_HUB_URL
-              value: {{ .Values.hub.url }}
-            {{- end }}
-            - name: CZ_HUB_SPACE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "codezero.name" . }}
-                  key: spaceName
-                  optional: true
-          envFrom:
-            - secretRef:
-                name: {{ include "spaceagent.name" . }}
-          volumeMounts:
-            - mountPath: /etc/ssl/certs/space
-              name: space-cert
-              readOnly: true
       containers:
         - name: {{ include "spaceagent.name" . }}
           securityContext:
@@ -67,6 +41,12 @@ spec:
                 configMapKeyRef:
                   name: {{ include "codezero.name" . }}
                   key: spaceID
+                  optional: true
+            - name: CZ_HUB_SPACE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "codezero.name" . }}
+                  key: spaceName
                   optional: true
             - name: CZ_PORT
               value: "8800"
