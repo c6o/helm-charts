@@ -36,18 +36,10 @@ spec:
             - name: CZ_HUB_URL
               value: {{ .Values.hub.url }}
             {{- end }}
-            - name: CZ_SPACE_ID
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "codezero.name" . }}
-                  key: spaceID
-                  optional: true
-            - name: CZ_HUB_SPACE_NAME
-              valueFrom:
-                configMapKeyRef:
-                  name: {{ include "codezero.name" . }}
-                  key: spaceName
-                  optional: true
+            {{- if .Values.space.name }}
+            - name: CZ_SPACE_NAME
+              value: {{ .Values.space.name }}
+            {{- end }}
             - name: CZ_PORT
               value: "8800"
             - name: CZ_ROUTER_IMAGE
