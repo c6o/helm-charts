@@ -22,3 +22,11 @@ rules:
   - patch
   - update
   - watch
+- apiGroups:
+  - codezero.io
+  resources:
+  - serves/status
+  verbs:
+  - get
+  - patch
+  - update
