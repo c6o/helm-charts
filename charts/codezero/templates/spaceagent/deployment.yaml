@@ -40,6 +40,10 @@ spec:
             - name: CZ_SPACE_NAME
               value: {{ .Values.space.name }}
             {{- end }}
+            {{- if .Values.opa.enabled }}
+            - name: CZ_OPA_URL
+              value: {{ .Values.opa.url }}
+            {{- end }}
             - name: CZ_PORT
               value: "8800"
             - name: CZ_ROUTER_IMAGE
