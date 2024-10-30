@@ -37,7 +37,7 @@ spec:
               value: {{ .Values.hub.url }}
             {{- end }}
             {{- if .Values.space.name }}
-            - name: CZ_SPACE_NAME
+            - name: CZ_HUB_SPACE_NAME
               value: {{ .Values.space.name }}
             {{- end }}
             {{- if .Values.opa.enabled }}
