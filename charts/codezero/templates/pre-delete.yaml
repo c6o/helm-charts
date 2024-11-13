@@ -1,3 +1,4 @@
+{{- if semverCompare ">=2.7.4" .Chart.AppVersion }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -43,3 +44,4 @@ spec:
           secret:
             secretName: space-cert
             optional: true
+{{- end }}
