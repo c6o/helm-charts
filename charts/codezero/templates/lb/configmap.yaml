@@ -21,4 +21,4 @@ data:
       default_backend spaceagent
 
     backend spaceagent
-      server spaceagent spaceagent.codezero:8800 check
+      server spaceagent spaceagent:8800 check
