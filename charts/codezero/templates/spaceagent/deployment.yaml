@@ -50,6 +50,14 @@ spec:
               value: "{{ .Values.router.privilegedAccess }}"
             - name: CZ_TRACING_ENABLED
               value: "{{ .Values.tracing.enabled }}"
+            - name: CZ_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CZ_POD_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
           envFrom:
             - secretRef:
                 name: {{ include "spaceagent.name" . }}
