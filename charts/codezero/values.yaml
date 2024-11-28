@@ -59,6 +59,10 @@ spaceagent:
     pullPolicy: Always
   replicaCount: 1
 
+  # for horizontal scaling (experimental)
+  redis:
+    host: ""
+
   podAnnotations: { }
   labels: { }
   podLabels: { }
