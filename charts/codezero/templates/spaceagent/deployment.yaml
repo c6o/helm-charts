@@ -58,6 +58,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            {{- if gt .Values.spaceagent.replicaCount 1.0}}
+            - name: CZ_SCALING_ENABLED
+              value: "true"
+            - name: CZ_REDIS_HOST
+              value: "{{ .Values.spaceagent.redis.host }}"
+            {{- end }}
           envFrom:
             - secretRef:
                 name: {{ include "spaceagent.name" . }}
