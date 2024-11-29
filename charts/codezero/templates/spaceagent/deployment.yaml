@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "spaceagent.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.spaceagent.replicaCount }}
+  replicas: {{ .Values.spaceagent.replicas }}
   selector:
     matchLabels:
       {{- include "spaceagent.selectorLabels" . | nindent 6 }}
@@ -58,7 +58,7 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
-            {{- if gt .Values.spaceagent.replicaCount 1.0}}
+            {{- if gt .Values.spaceagent.replicas 1.0}}
             - name: CZ_SCALING_ENABLED
               value: "true"
             - name: CZ_REDIS_HOST
