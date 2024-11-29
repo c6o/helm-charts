@@ -24,13 +24,14 @@ podLabels: { }
 
 router:
   privilegedAccess: false
+  replicas: 1
 
 operator:
   name: operator
   image:
     tag: ""
     pullPolicy: Always
-  replicaCount: 1
+  replicas: 1
 
   podAnnotations: { }
   labels: { }
@@ -57,7 +58,7 @@ spaceagent:
   image:
     tag: ""
     pullPolicy: Always
-  replicaCount: 1
+  replicas: 1
 
   # for horizontal scaling (experimental)
   redis:
