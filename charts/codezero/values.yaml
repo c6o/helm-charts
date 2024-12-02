@@ -60,9 +60,9 @@ spaceagent:
     pullPolicy: Always
   replicas: 1
 
-  # for horizontal scaling (experimental)
+  # for horizontal scaling (experimental). Secret must be in the same namespace as the spaceagent
   redis:
-    host: ""
+    secret: ""
 
   podAnnotations: { }
   labels: { }
