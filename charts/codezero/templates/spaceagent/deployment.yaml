@@ -62,7 +62,15 @@ spec:
             - name: CZ_SCALING_ENABLED
               value: "true"
             - name: CZ_REDIS_HOST
-              value: "{{ .Values.spaceagent.redis.host }}"
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: host
+            - name: CZ_REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis
+                  key: password
             {{- end }}
           envFrom:
             - secretRef:
@@ -93,6 +101,12 @@ spec:
           secret:
             secretName: space-cert
             optional: true
+        {{- if gt .Values.spaceagent.replicas 1.0}}
+        - name: redis
+          secret:
+            secretName: {{ .Values.spaceagent.redis.secret }}
+            optional: true
+        {{- end }}
       {{- with .Values.spaceagent.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
