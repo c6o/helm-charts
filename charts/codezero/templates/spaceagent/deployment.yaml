@@ -58,6 +58,10 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: status.podIP
+            - name: CZ_HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             {{- if gt (int .Values.spaceagent.replicas) 1}}
             - name: CZ_SCALING_ENABLED
               value: "true"
