@@ -25,6 +25,7 @@ podLabels: { }
 router:
   privilegedAccess: false
   replicas: 1
+  topologySpreadConstraints: []
 
 operator:
   name: operator
@@ -64,11 +65,11 @@ spaceagent:
   redis:
     secret: ""
 
-  podAnnotations: { }
-  labels: { }
-  podLabels: { }
+  podAnnotations: {}
+  labels: {}
+  podLabels: {}
 
-  podSecurityContext: { }
+  podSecurityContext: {}
   securityContext:
     runAsNonRoot: true
     runAsUser: 1000
@@ -80,14 +81,15 @@ spaceagent:
     seccompProfile:
       type: RuntimeDefault
 
-  resources: { }
-  nodeSelector: { }
-  tolerations: [ ]
-  affinity: { }
+  topologySpreadConstraints: []
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
   serviceAccount:
     create: true
-    annotations: { }
+    annotations: {}
     name: ""
 
 lb:
@@ -97,11 +99,11 @@ lb:
     pullPolicy: Always
   replicaCount: 1
 
-  podAnnotations: { }
-  labels: { }
-  podLabels: { }
+  podAnnotations: {}
+  labels: {}
+  podLabels: {}
 
-  podSecurityContext: { }
+  podSecurityContext: {}
   securityContext:
     runAsNonRoot: true
     runAsUser: 1000
@@ -113,16 +115,16 @@ lb:
     seccompProfile:
       type: RuntimeDefault
 
-  resources: { }
-  nodeSelector: { }
-  tolerations: [ ]
-  affinity: { }
+  resources: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
 
   serviceAccount:
     create: true
-    annotations: { }
+    annotations: {}
     name: ""
 
   service:
-    annotations: { }
+    annotations: {}
     type: LoadBalancer

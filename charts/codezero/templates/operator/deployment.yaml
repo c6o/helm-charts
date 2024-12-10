@@ -32,8 +32,14 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          - name: CZ_ROUTER_PRIVILEGED_ACCESS
+            value: "{{ .Values.router.privilegedAccess }}"
           - name: CZ_ROUTER_REPLICAS
             value: "{{ .Values.router.replicas }}"
+          {{- with .Values.router.topologySpreadConstraints }}
+          - name: "CZ_ROUTER_TOPOLOGY_SPREAD_CONSTRAINTS"
+            value: {{ . | toJson | quote }}
+          {{- end }}
         securityContext:
           {{- toYaml .Values.operator.securityContext | nindent 12 }}
         livenessProbe:

@@ -19,6 +19,10 @@ spec:
       serviceAccountName: {{ include "spaceagent.name" . }}
       securityContext:
         {{- toYaml .Values.spaceagent.podSecurityContext | nindent 8 }}
+      {{- with .Values.spaceagent.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ include "spaceagent.name" . }}
           securityContext:
@@ -44,10 +48,6 @@ spec:
             - name: CZ_OPA_URL
               value: {{ .Values.opa.url }}
             {{- end }}
-            - name: CZ_ROUTER_IMAGE
-              value: "c6oio/router:{{ .Values.spaceagent.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
-            - name: CZ_ROUTER_PRIVILEGED_ACCESS
-              value: "{{ .Values.router.privilegedAccess }}"
             - name: CZ_TRACING_ENABLED
               value: "{{ .Values.tracing.enabled }}"
             - name: CZ_NAMESPACE
