@@ -27,11 +27,16 @@ kubectl delete ns codezero
 
 ## Configuration Options
 
-| Name                      | Default | Description                                                    |
-| ------------------------- | ------- | -------------------------------------------------------------- |
-| `space.name`              | `""`    | Name of Teamspace                                              |
-| `org.apikey`              | `""`    | Your Organization API Key                                      |
-| `org.id`                  | `""`    | Your Organization ID                                           |
-| `opa.url`                 | `""`    | URL of your Open Policy Agent                                  |
-| `opa.enabled`             | `false` | If true enable OPA                                             |
-| `router.privilegedAccess` | `false` | If true router pods are deployed with an empty securityContext |
+| Name                                   | Default | Description                                                                                                                                                                                                                        |
+| -------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `space.name`                           | `""`    | Name of Teamspace                                                                                                                                                                                                                  |
+| `org.apikey`                           | `""`    | Your Organization API Key                                                                                                                                                                                                          |
+| `org.id`                               | `""`    | Your Organization ID                                                                                                                                                                                                               |
+| `opa.url`                              | `""`    | URL of your Open Policy Agent                                                                                                                                                                                                      |
+| `opa.enabled`                          | `false` | If true enable OPA                                                                                                                                                                                                                 |
+| `router.privilegedAccess`              | `false` | If true router pods are deployed with an empty securityContext                                                                                                                                                                     |
+| `router.replicas`                      | `1`     | Number of replicas for router deployments on Serves                                                                                                                                                                                |
+| `router.topologySpreadConstraints`     | `[]`    | Pod Topology Spread Constraints of router deployments                                                                                                                                                                              |
+| `spaceagent.replicas`                  | `1`     | Number of replicas for the Space Agent deployment                                                                                                                                                                                  |
+| `spaceagent.redis.secret`              | `""`    | Required when `spaceagent.replicas` is greater than 1. Name of the K8s Secret that contains the Redis connection parameters with the following `data` keys: `host`, `password`. The Secret must be in the Space Agent's namespace. |
+| `spaceagent.topologySpreadConstraints` | `[]`    | Pod Topology Spread Constraints of Space Agent deployment                                                                                                                                                                          |
