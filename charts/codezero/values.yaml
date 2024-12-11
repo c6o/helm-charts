@@ -25,6 +25,7 @@ podLabels: { }
 router:
   privilegedAccess: false
   replicas: 1
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
   topologySpreadConstraints: []
 
 operator:
@@ -81,6 +82,7 @@ spaceagent:
     seccompProfile:
       type: RuntimeDefault
 
+  # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
   topologySpreadConstraints: []
   resources: {}
   nodeSelector: {}
