@@ -8,6 +8,9 @@ metadata:
     {{ toYaml .Values.lb.service.annotations | indent 4 | trim}}
 spec:
   type: {{ .Values.lb.service.type }}
+  {{- with .Values.lb.service.loadBalancerIP }}
+  loadBalancerIP: {{ . }}
+  {{- end }}
   ports:
     - port: 8800
       targetPort: 8800
