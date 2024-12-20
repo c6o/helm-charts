@@ -84,18 +84,21 @@ spec:
             - secretRef:
                 name: {{ include "spaceagent.name" . }}
           ports:
-            - containerPort: 8800
+            - name: http
+              containerPort: 8800
               protocol: TCP
           livenessProbe:
             httpGet:
               path: /healthz
               port: 8800
+              scheme: HTTPS
             initialDelaySeconds: 3
             periodSeconds: 20
           readinessProbe:
             httpGet:
               path: /readyz
               port: 8800
+              scheme: HTTPS
             initialDelaySeconds: 3
             periodSeconds: 20
           resources:

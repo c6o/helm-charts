@@ -93,45 +93,12 @@ spaceagent:
   tolerations: []
   affinity: {}
 
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
-
-lb:
-  name: lb
-  image:
-    tag: "2.8.1"
-    pullPolicy: Always
-  replicaCount: 1
-
-  podAnnotations: {}
-  labels: {}
-  podLabels: {}
-
-  podSecurityContext: {}
-  securityContext:
-    runAsNonRoot: true
-    runAsUser: 1000
-    runAsGroup: 1000
-    allowPrivilegeEscalation: false
-    capabilities:
-      drop:
-        - ALL
-    seccompProfile:
-      type: RuntimeDefault
-
-  resources: {}
-  nodeSelector: {}
-  tolerations: []
-  affinity: {}
-
-  serviceAccount:
-    create: true
-    annotations: {}
-    name: ""
-
   service:
     annotations: {}
     type: LoadBalancer
     loadBalancerIP: ""
+
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: ""
