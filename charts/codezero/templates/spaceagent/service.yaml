@@ -5,7 +5,11 @@ metadata:
   labels:
     {{- include "spaceagent.labels" . | nindent 4 }}
   annotations:
+    {{- if .Values.spaceagent.service.annotations }}
     {{ toYaml .Values.spaceagent.service.annotations | indent 4 | trim}}
+    {{- else if .Values.lb.service.annotations }}
+    {{ toYaml .Values.lb.service.annotations | indent 4 | trim}}
+    {{- end }}
 spec:
   type: {{ .Values.spaceagent.service.type }}
   {{- with .Values.spaceagent.service.loadBalancerIP }}
