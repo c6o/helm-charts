@@ -96,15 +96,13 @@ spec:
               path: /healthz
               port: 8800
               scheme: HTTPS
-            initialDelaySeconds: 3
-            periodSeconds: 20
+            initialDelaySeconds: 1
           readinessProbe:
             httpGet:
               path: /readyz
               port: 8800
               scheme: HTTPS
-            initialDelaySeconds: 3
-            periodSeconds: 20
+            initialDelaySeconds: 1
           resources:
             {{- toYaml .Values.spaceagent.resources | nindent 12 }}
           volumeMounts:
