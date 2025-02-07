@@ -52,6 +52,10 @@ spec:
             - name: CZ_OPA_URL
               value: {{ .Values.opa.url }}
             {{- end }}
+            {{- with .Values.spaceagent.logLevel }}
+            - name: CZ_LOG_LEVEL
+              value: {{ . }}
+            {{- end }}
             - name: CZ_TRACING_ENABLED
               value: "{{ .Values.tracing.enabled }}"
             - name: CZ_NAMESPACE
