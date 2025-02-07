@@ -57,6 +57,7 @@ operator:
 
 spaceagent:
   name: spaceagent
+  logLevel: info
   image:
     tag: ""
     pullPolicy: Always
