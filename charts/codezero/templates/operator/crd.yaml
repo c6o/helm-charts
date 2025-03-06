@@ -51,6 +51,7 @@ spec:
                           - default
                           - user
                           - header
+                          - baggage
                           type: string
                         value:
                           type: string
