@@ -40,6 +40,14 @@ spec:
           - name: "CZ_ROUTER_TOPOLOGY_SPREAD_CONSTRAINTS"
             value: {{ . | toJson | quote }}
           {{- end }}
+          {{- with .Values.router.podLabels}}
+          - name: "CZ_ROUTER_POD_LABELS"
+            value: {{ . | toJson | quote }}
+          {{- end }}
+          {{- with .Values.router.podAnnotations}}
+          - name: "CZ_ROUTER_POD_ANNOTATIONS"
+            value: {{ . | toJson | quote }}
+          {{- end }}
         securityContext:
           {{- toYaml .Values.operator.securityContext | nindent 12 }}
         livenessProbe:
