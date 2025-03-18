@@ -27,8 +27,10 @@ router:
   replicas: 1
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
   topologySpreadConstraints: []
+  labels: {}
   podLabels: { }
   podAnnotations: { }
+  serviceLabels: { }
 
 operator:
   name: operator
