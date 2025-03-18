@@ -38,7 +38,7 @@ kubectl delete ns codezero
 | `router.podAnnotations`                | `{}`    | Set pod annotations |
 | `router.podLabels`                     | `{}`    | Sets pod labels |
 | `router.replicas`                      | `1`     | Number of replicas for router deployments on Serves                                                                                                                                                                                |
-| `router.ServiceLabels`                 | `{}`    | Set router service labels |
+| `router.serviceLabels`                 | `{}`    | Set router service labels |
 | `router.topologySpreadConstraints`     | `[]`    | Pod Topology Spread Constraints of router deployments                                                                                                                                                                              |
 | `space.name`                           | `""`    | Name of Teamspace                                                                                                                                                                                                                  |
 | `spaceagent.externalHost`              | `""`    | For cases where codezero's loadbalancer host is not public and custom networking/ingress is used to make the spaceagent publicly accessible                                                                                        |                                                                 |
