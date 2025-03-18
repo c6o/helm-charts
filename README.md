@@ -33,7 +33,7 @@ kubectl delete ns codezero
 | `org.id`                               | `""`    | Your Organization ID                                                                                                                                                                                                               |
 | `opa.url`                              | `""`    | URL of your Open Policy Agent                                                                                                                                                                                                      |
 | `opa.enabled`                          | `false` | If true enable OPA                                                                                                                                                                                                                 |
-| `router.Labels`                        | `{}`    | Sets router deployment labels |
+| `router.labels`                        | `{}`    | Sets router deployment labels |
 | `router.privilegedAccess`              | `false` | If true router pods are deployed with an empty securityContext                                                                                                                                                                     |
 | `router.podAnnotations`                | `{}`    | Set pod annotations |
 | `router.podLabels`                     | `{}`    | Sets pod labels |
