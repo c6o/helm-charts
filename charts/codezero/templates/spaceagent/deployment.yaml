@@ -86,7 +86,11 @@ spec:
             {{- end }}
           envFrom:
             - secretRef:
+                {{- if eq .Values.org.secret "" }}
                 name: {{ include "spaceagent.name" . }}
+                {{- else }}
+                name: {{ .Values.org.secret }}
+                {{- end }}
           ports:
             - name: http
               containerPort: 8800
