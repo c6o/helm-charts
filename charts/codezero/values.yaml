@@ -7,11 +7,12 @@ image:
 hub:
   url: https://hub.codezero.io
 space:
-  token: ""
+  token: "" # deprecated. use org.id and org.apikey instead
   name: ""
 org:
   apikey: ""
   id: ""
+  secret: ""
 opa:
   url: ""
   enabled: false
