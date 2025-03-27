@@ -27,7 +27,7 @@ spec:
         - name: {{ include "spaceagent.name" . }}
           securityContext:
             {{- toYaml .Values.spaceagent.securityContext | nindent 12 }}
-          image: "c6oio/spaceagent:{{ .Values.spaceagent.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ include "image-path" (dict "root" . "image" .Values.spaceagent.image) }}"
           imagePullPolicy: {{ .Values.spaceagent.image.pullPolicy }}
           env:
             - name: CZ_SPACE_CA_CERT
