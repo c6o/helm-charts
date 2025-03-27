@@ -29,11 +29,19 @@ kubectl delete ns codezero
 
 | Name                                   | Default | Description                                                                                                                                                                                                                        |
 | -------------------------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `image.repository`                     | `""`    | Override default image repository for all codezero deployments. |
+| `image.tag`                            | `""`    | Override default image tag for all codezero deployments |
 | `org.apikey`                           | `""`    | Your Organization API Key                                                                                                                                                                                                          |
 | `org.id`                               | `""`    | Your Organization ID                                                                                                                                                                                                               |
 | `org.secret`                           | `""`    | Provide custom secret for `org.id` and `org.apikey`. Secret data must have the keys `CZ_HUB_ORG_ID` and `CZ_HUB_ORG_APIKEY`. Takes precedence over `org.id` and `org.apikey` helm values.
 | `opa.url`                              | `""`    | URL of your Open Policy Agent                                                                                                                                                                                                      |
 | `opa.enabled`                          | `false` | If true enable OPA                                                                                                                                                                                                                 |
+| `operator.image.tag`                   | `""`    | Override default image tag for operator deployment |
+| `operator.image.repository`            | `""`    | Override default image repository for operator deployment |
+| `operator.labels`                      | `{}`    | Set operator deployment labels |
+| `operator.podLabels`                   | `{}`    | Set operator pod labels |
+| `router.image.tag`                     | `""`    | Override default image tag for router deployment |
+| `router.image.repository`              | `""`    | Override default image repository for router deployment |
 | `router.labels`                        | `{}`    | Sets router deployment labels |
 | `router.privilegedAccess`              | `false` | If true router pods are deployed with an empty securityContext                                                                                                                                                                     |
 | `router.podAnnotations`                | `{}`    | Set pod annotations |
@@ -42,8 +50,12 @@ kubectl delete ns codezero
 | `router.serviceLabels`                 | `{}`    | Set router service labels |
 | `router.topologySpreadConstraints`     | `[]`    | Pod Topology Spread Constraints of router deployments                                                                                                                                                                              |
 | `space.name`                           | `""`    | Name of Teamspace                                                                                                                                                                                                                  |
-| `spaceagent.externalHost`              | `""`    | For cases where codezero's loadbalancer host is not public and custom networking/ingress is used to make the spaceagent publicly accessible                                                                                        |                                                                 |
+| `spaceagent.externalHost`              | `""`    | For cases where codezero's loadbalancer host is not public and custom networking/ingress is used to make the spaceagent publicly accessible                                                                                        |
+| `spaceagent.image.tag`                 | `""`    | Override default image tag for spaceagent deployment |
+| `spaceagent.image.repository`          | `""`    | Override default image repository for spaceagent deployment |                                                         
 | `spaceagent.logLevel`                  | `info`  | Set logging verbosity, valid log levels are: debug, info, warn, error.                                                                                                                                                             |
+| `spaceagent.labels`                    | `{}`    | Set spaceagent deployment labels |
+| `spaceagent.podLabels`                 | `{}`    | Set spaceagent pod labels |
 | `spaceagent.replicas`                  | `1`     | Number of replicas for the Space Agent deployment`                                                                                                                                                                                 |
 | `spaceagent.redis.secret`              | `""`    | Required when `spaceagent.replicas` is greater than 1. Name of the K8s Secret that contains the Redis connection parameters with the following `data` keys: `host`, `password`. The Secret must be in the Space Agent's namespace. |
 | `spaceagent.service.annotations`       | `{}`    | Set annotations for the spaceagent service, e.g. to set cloud provider specific annotations for loadbalancer creation.

@@ -3,7 +3,8 @@
 # Declare variables to be passed into your templates.
 
 image:
-  tag: 2.15.0
+  tag: ""
+  repository: ""
 hub:
   url: https://hub.codezero.io
 space:
@@ -24,6 +25,10 @@ labels: { }
 podLabels: { }
 
 router:
+  image:
+    repository: ""
+    name: router
+    tag: ""
   privilegedAccess: false
   replicas: 1
   # ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
@@ -36,6 +41,8 @@ router:
 operator:
   name: operator
   image:
+    repository: ""
+    name: operator
     tag: ""
     pullPolicy: Always
   replicas: 1
@@ -64,6 +71,8 @@ spaceagent:
   name: spaceagent
   logLevel: info
   image:
+    repository: ""
+    name: spaceagent
     tag: ""
     pullPolicy: Always
 

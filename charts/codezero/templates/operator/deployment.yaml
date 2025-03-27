@@ -20,7 +20,7 @@ spec:
         {{- toYaml .Values.operator.podSecurityContext | nindent 8 }}
       containers:
       - name: {{ include "operator.name" . }}
-        image: "c6oio/operator:{{ .Values.operator.image.tag | default .Values.image.tag | default .Chart.AppVersion }}"
+        image: "{{ include "image-path" (dict "root" . "image" .Values.operator.image) }}"
         imagePullPolicy: {{ .Values.operator.image.pullPolicy }}
         command:
         - /operator
@@ -32,6 +32,8 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
+          - name: CZ_ROUTER_IMAGE
+            value: "{{ include "image-path" (dict "root" . "image" .Values.router.image) }}"
           - name: CZ_ROUTER_PRIVILEGED_ACCESS
             value: "{{ .Values.router.privilegedAccess }}"
           - name: CZ_ROUTER_REPLICAS

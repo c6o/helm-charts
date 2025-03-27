@@ -42,3 +42,10 @@ Pod annotations
 {{ . | toYaml }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return a remote image path based on `.` (passed as root) and e.g. `.Values.spaceagent.image` ( passed as image )
+*/}}
+{{- define "image-path" -}}
+{{ .image.repository | default .root.Values.image.repository | default "c6oio" }}/{{ .image.name }}:{{ .image.tag | default .root.Values.image.tag | default .root.Chart.AppVersion }}
+{{- end -}}
