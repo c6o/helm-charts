@@ -1,7 +1,3 @@
-{{- if ne .Release.Namespace "codezero" }}
-{{- fail "Codezero has to be installed in codezero namespace" }}
-{{- end }}
-
 {{- define "spaceagent.name" -}}
 spaceagent
 {{- end }}
