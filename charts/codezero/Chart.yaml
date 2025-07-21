@@ -1,6 +1,7 @@
 apiVersion: v2
 name: codezero
 description: Codezero 2.x system for Kubernetes
+icon: https://raw.githubusercontent.com/c6o/helm-charts/main/charts/codezero/logo.png
 
 # A chart can be either an 'application' or a 'library' chart.
 #
