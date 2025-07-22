@@ -1,5 +1,7 @@
 # Helm charts for Codezero Space Agent
 
+For further information regarding Codezero, please refer to the [Codezero documentation](https://docs.codezero.io).
+
 ## Installing the Chart
 
 ```sh
